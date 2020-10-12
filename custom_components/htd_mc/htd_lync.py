@@ -101,55 +101,51 @@ class HtdMcClient:
             _LOGGER.warning("invalid input number")
             return
 
-        cmd = bytearray([0x02, 0x00, zone, 0x04, input + 2])
+        cmd = bytearray([0x02, 0x00, zone, 0x04, input + 9])
 
         self.send_command(cmd, zone)
 
-    def volume_up(self, zone):
-        if zone not in range(1, 7):
-            _LOGGER.warning("Invalid Zone")
-            return
+#    def volume_up(self, zone):
+#        if zone not in range(1, 7):
+#            _LOGGER.warning("Invalid Zone")
+#            return
 
-        cmd = bytearray([0x02, 0x00, zone, 0x04, 0x09])
-        self.send_command(cmd, zone)
+#        cmd = bytearray([0x02, 0x00, zone, 0x04, 0x09])
+#        self.send_command(cmd, zone)
 
-    def volume_down(self, zone):
-        if zone not in range(1, 7):
-            _LOGGER.warning("Invalid Zone")
-            return
+#    def volume_down(self, zone):
+#        if zone not in range(1, 7):
+#            _LOGGER.warning("Invalid Zone")
+#            return
 
-        cmd = bytearray([0x02, 0x00, zone, 0x04, 0x0A])
-        self.send_command(cmd, zone)
+#        cmd = bytearray([0x02, 0x00, zone, 0x04, 0x0A])
+#        self.send_command(cmd, zone)
 
     def set_volume(self, zone, vol):
         if vol not in range(0, MAX_HTD_VOLUME):
             _LOGGER.warning("Invald Volume")
             return
+        if vol == 60:
+            vol_hex = 0x00
+        else: 
+            vol_hex = hex(vol+196)
+            
+        cmd = bytearray([0x02, 0x00, zone, 0x15, vol_hex])
 
-        zone_info = self.query_zone(zone)
-
-        vol_diff = vol - zone_info['vol']
-        start_time = time.time()
-
-        if vol_diff < 0:
-            for k in range(abs(vol_diff)):
-                self.volume_down(zone)
-        elif vol_diff > 0:
-            for k in range(vol_diff):
-                self.volume_up(zone)
-        else:
-            pass
-
-        return
+        self.send_command(cmd, zone)
 
     def toggle_mute(self, zone):
         if zone not in range(1, 7):
             _LOGGER.warning("Invalid Zone")
             return
 
-        cmd = bytearray([0x02, 0x00, zone, 0x04, 0x22])
+        cmd = bytearray([0x02, 0x00, zone, 0x04, 0x1E])
         self.send_command(cmd, zone)
+# Need to add "off" > 0x1F
 
+#############################################
+# Not sure it exists for Lync
+#############################################
     def query_zone(self, zone):
         if zone not in range(1, 7):
             _LOGGER.warning("Invalid Zone")
@@ -172,9 +168,9 @@ class HtdMcClient:
             return
 
         if zone == 0:
-            cmd = bytearray([0x02, 0x00, zone, 0x04, 0x38 if pwr else 0x39])
+            cmd = bytearray([0x02, 0x00, zone, 0x04, 0x55 if pwr else 0x56])
         else:
-            cmd = bytearray([0x02, 0x00, zone, 0x04, 0x20 if pwr else 0x21])
+            cmd = bytearray([0x02, 0x00, zone, 0x04, 0x57 if pwr else 0x58])
 
         self.send_command(cmd, zone)
 
