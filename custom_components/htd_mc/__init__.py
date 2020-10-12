@@ -1,4 +1,4 @@
-"""Support for Home Theatre Direct's MC series"""
+"""Support for Home Theatre Direct's LYNC series"""
 import voluptuous as vol
 
 from homeassistant.core import HomeAssistant
@@ -7,9 +7,9 @@ from homeassistant.const import CONF_HOST, CONF_PORT, CONF_PASSWORD, CONF_USERNA
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.typing import ConfigType, Dict
 
-from .htd_mc import DEFAULT_HTD_MC_PORT, HtdMcClient
+from .htd_lync import DEFAULT_HTD_LYNC_PORT, HtdMcClient
 
-DOMAIN = "htd_mc"
+DOMAIN = "htd_lync"
 
 CONF_ZONES = "zones"
 CONF_SOURCES = "sources"
@@ -19,7 +19,7 @@ CONFIG_SCHEMA = vol.Schema(
         DOMAIN: vol.Schema(
             [{
                 vol.Required(CONF_HOST): cv.string,
-                vol.Optional(CONF_PORT, default=DEFAULT_HTD_MC_PORT): cv.port,
+                vol.Optional(CONF_PORT, default=DEFAULT_HTD_LYNC_PORT): cv.port,
                 vol.Optional(CONF_ZONES): vol.All(
                     cv.ensure_list, [cv.string]
                 ),
