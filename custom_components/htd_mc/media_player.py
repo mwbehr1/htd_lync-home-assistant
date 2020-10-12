@@ -1,4 +1,4 @@
-"""Support for HTD MC Series"""
+"""Support for HTD Lync Series"""
 from homeassistant.components.media_player import PLATFORM_SCHEMA, MediaPlayerEntity
 from homeassistant.components.media_player.const import (
     SUPPORT_SELECT_SOURCE,
@@ -17,9 +17,9 @@ from homeassistant.const import (
 )
 
 from . import DOMAIN, CONF_ZONES
-from .htd_mc import HtdMcClient, MAX_HTD_VOLUME
+from .htd_lync import HtdLyncClient, MAX_HTD_VOLUME
 
-SUPPORT_HTD_MC = (
+SUPPORT_HTD_LYNC = (
     SUPPORT_SELECT_SOURCE
     | SUPPORT_TURN_OFF
     | SUPPORT_TURN_ON
@@ -56,11 +56,11 @@ class HtdDevice(MediaPlayerEntity):
 
     @property
     def supported_features(self):
-        return SUPPORT_HTD_MC
+        return SUPPORT_HTD_LYNC
 
     @property
     def unique_id(self):
-        return f"media_player.htd_mc_zone_{self.id}_{self.zone}"
+        return f"media_player.htd_lync_zone_{self.id}_{self.zone}"
 
     @property
     def name(self):
