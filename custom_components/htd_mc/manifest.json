@@ -1,6 +1,6 @@
 {
-    "domain": "htd_mc",
-    "name": "HTD MC Series",
+    "domain": "htd_lync",
+    "name": "HTD Lync Series",
     "dependencies": [],
     "requirements": []
 }
