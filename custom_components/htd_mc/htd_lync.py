@@ -3,7 +3,7 @@ import time
 import logging
 
 MAX_HTD_VOLUME = 60
-DEFAULT_HTD_MC_PORT = 10006
+DEFAULT_HTD_LYNC_PORT = 10006
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -16,7 +16,7 @@ def to_correct_string(message):
 
 
 class HtdMcClient:
-    def __init__(self, ip_address, port=DEFAULT_HTD_MC_PORT):
+    def __init__(self, ip_address, port=DEFAULT_HTD_LYNC_PORT):
         self.ip_address = ip_address
         self.port = port
         self.zones = {
